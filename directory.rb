@@ -23,10 +23,10 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-    if student[:name].length < 12
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    end
+  n = 0
+  until n == students.count
+  puts "#{students[n][:name]} (#{students[n][:cohort]} cohort)"
+  n += 1
   end
 end
 
