@@ -3,11 +3,18 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do
+    puts "What is their cohort?"
+    cohort_list = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
+    cohort = gets.chomp
+      unless cohort_list.include? cohort.to_sym
+        puts "This is not a valid month, please enter a valid one"
+        cohort = gets.chomp
+      end
     puts "What is their hobby?"
     hobby = gets.chomp
     puts "What is their country of birth?"
     country = gets.chomp
-    students << {name: name, cohort: :november, hobby: hobby, country: country}
+    students << {name: name, cohort: cohort, hobby: hobby, country: country}
     puts "Now we have #{students.count} students"
     # get another name from the user
     puts "Enter a new student name or to finish, just hit return twice"
