@@ -1,7 +1,8 @@
 def input_students
   puts "Please enter the names of the students"
   students = []
-  name = gets.chomp
+  name = gets
+  name.gsub!("\n","")
   while !name.empty? do
     puts "What is their cohort?"
     cohort_list = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
@@ -10,15 +11,11 @@ def input_students
         puts "This is not a valid month, please enter a valid one"
         cohort = gets.chomp
       end
-    puts "What is their hobby?"
-    hobby = gets.chomp
-    puts "What is their country of birth?"
-    country = gets.chomp
-    students << {name: name, cohort: cohort.to_sym, hobby: hobby, country: country}
+    students << {name: name, cohort: cohort.to_sym}
     puts "Now we have #{students.count} students"
-    # get another name from the user
     puts "Enter a new student name or to finish, just hit return twice"
-    name = gets.chomp
+    name = gets
+    name.gsub!("\n","")
   end
   students = students.sort_by {|student| cohort_list.index(student[:cohort])}
   students
@@ -29,12 +26,9 @@ def print_header
   puts "-------------".center(100)
 end
 
-
-
-
 def print(students)
   students.each do |student|
-  puts "#{student[:name]} (#{student[:cohort]} cohort, hobby: #{student[:hobby]}, country of origin: #{student[:country]})".center(100)
+  puts "#{student[:name]} (#{student[:cohort]} cohort)".center(100)
   end
 end
 
@@ -43,7 +37,7 @@ def print_footer(students)
 end
 students = input_students
 
-#nothing happens until we call the methods
+
 print_header
 print(students)
 print_footer(students)
