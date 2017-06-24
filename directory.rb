@@ -3,8 +3,8 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"
 end
 
@@ -75,25 +75,31 @@ def print_footer
 end
 
 def save_students
+  puts "Which file do you want to save in?"
+  filename = STDIN.gets.chomp
   # opent the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  puts "The list has been saved to students.csv"
+  puts "The list has been saved to #{filename}"
   file.close
 end
 
-def load_students(filename = "students.csv")
+def load_students(filename = "")
+  if filename == ""
+    puts "Which file would you like to load?"
+    filename = STDIN.gets.chomp
+  end
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(",")
     create_student_hash(name, cohort)
   end
-  puts "Loaded #{@students.count} from #{filename}"
+  puts "Loaded #{File.foreach(file).count} students from #{filename}"
   file.close
 end
 
@@ -106,14 +112,13 @@ def try_load_students
   return if filename.nil? # get out of the method if it isn't given
   if File.exists?(filename)
     load_students(filename)
-      puts "Loaded #{@students.count} from #{filename}"
   else
     puts "Sorry, #{filename} doesn't exist."
     exit #quit the program
   end
 end
 
-load_students
+try_load_students
 interactive_menu
 
 
