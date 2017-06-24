@@ -77,12 +77,11 @@ end
 def save_students
   puts "Which file do you want to save in?"
   filename = STDIN.gets.chomp
-  # opent the file for writing
-  File.open(filename, "w") do |f|
+  # open the file for writing
+  require "CSV"
+  CSV.open(filename, "wb") do |f|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      f.puts csv_line
+      f << [student[:name], student[:cohort]]
     end
   end
   puts "The list has been saved to #{filename}"
@@ -93,11 +92,9 @@ def load_students(filename = "")
     puts "Which file would you like to load?"
     filename = STDIN.gets.chomp
   end
-  File.open(filename) do |f|
-    while student = f.gets
-      name, cohort = student.chomp.split(",")
-      create_student_hash(name, cohort)
-    end
+  require "CSV"
+  CSV.foreach(filename) do |a,b|
+      create_student_hash(a, b)
   end
   puts "Student list loaded from #{filename}"
 end
