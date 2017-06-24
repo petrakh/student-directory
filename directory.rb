@@ -93,6 +93,7 @@ def load_students(filename = "students.csv")
   name, cohort = line.chomp.split(",")
     create_student_hash(name, cohort)
   end
+  puts "Loaded #{@students.count} from #{filename}"
   file.close
 end
 
@@ -112,7 +113,7 @@ def try_load_students
   end
 end
 
-try_load_students
+load_students
 interactive_menu
 
 
