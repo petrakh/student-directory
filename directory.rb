@@ -37,7 +37,7 @@ def input_students
   name = STDIN.gets.chomp
   while !name.empty? do
     create_student_hash(name)
-    puts "Now we have #{@students.count} students"
+    puts "Done, now we have #{@students.count} students"
     puts "Enter a new student name or to finish, just hit return twice"
     name = STDIN.gets.chomp
   end
@@ -83,6 +83,7 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "The list has been saved to students.csv"
   file.close
 end
 
